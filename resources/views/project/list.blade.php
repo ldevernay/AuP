@@ -27,12 +27,12 @@
 					<p>{{ $project->pitch }}</p>
   				<p>{{ $project->github }}</p>
   				<p>{{ $project->language->name }}</p>
-					@if(Auth::check() and Auth::user()->admin)
-						{!! Form::open(['method' => 'DELETE', 'route' => ['project.destroy', $project->id]]) !!}
-							{!! Form::submit('Supprimer ce projet', ['class' => 'btn btn-danger btn-xs ', 'onclick' => 'return confirm(\'Vraiment supprimer ce projet ?\')']) !!}
-						{!! Form::close() !!}
-					@endif
 					<em class="pull-right">
+					{!! link_to_route('project.show', 'Voir', [$project->id], ['class' => 'btn btn-success btn-block']) !!}
+					{!! link_to_route('project.edit', 'Modifier', [$project->id], ['class' => 'btn btn-warning btn-block']) !!}
+						{!! Form::open(['method' => 'DELETE', 'route' => ['project.destroy', $project->id]]) !!}
+							{!! Form::submit('Supprimer', ['class' => 'btn btn-danger btn-block', 'onclick' => 'return confirm(\'Vraiment supprimer ce projet ?\')']) !!}
+						{!! Form::close() !!}
 						<span class="glyphicon glyphicon-pencil"></span> {{ $project->user->name }} le {!! $project->created_at->format('d-m-Y') !!}
 					</em>
 				</section>

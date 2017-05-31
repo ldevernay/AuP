@@ -31,4 +31,15 @@ class ProjectRepository
 		$this->project->findOrFail($id)->delete();
 	}
 
+  public function getById($id)
+	{
+		return $this->project->findOrFail($id);
+	}
+
+  public function update($id, Array $inputs)
+	{
+		$this->getById($id)->update($inputs);
+	}
+
+
 }

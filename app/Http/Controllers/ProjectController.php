@@ -53,21 +53,20 @@ class ProjectController extends Controller
 
   	public function show($id)
   	{
-  		$user = $this->projectRepository->getById($id);
+  		$project = $this->projectRepository->getById($id);
 
   		return view('project.show',  compact('project'));
   	}
 
   	public function edit($id)
   	{
-  		$user = $this->projectRepository->getById($id);
+  		$project = $this->projectRepository->getById($id);
 
   		return view('project.edit',  compact('project'));
   	}
 
   	public function update(ProjectRequest $request, $id)
   	{
-  		$this->setAdmin($request);
 
   		$this->projectRepository->update($id, $request->all());
 
