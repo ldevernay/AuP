@@ -20,6 +20,12 @@ class CreateProjectsTable extends Migration
         ->on('users')
         ->onDelete('restrict')
         ->onUpdate('restrict');
+    $table->integer('language_id')->default(1)->unsigned();
+    $table->foreign('language_id')
+        ->references('id')
+        ->on('languages')
+        ->onDelete('restrict')
+        ->onUpdate('restrict');
   });
 }
 
