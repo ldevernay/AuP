@@ -14,7 +14,7 @@ class ProjectTableSeeder extends Seeder {
 	{
 		DB::table('projects')->delete();
 
-		for($i = 0; $i < 100; ++$i)
+		for($i = 0; $i < 20; ++$i)
 		{
 			$date = $this->randDate();
 			DB::table('projects')->insert([
