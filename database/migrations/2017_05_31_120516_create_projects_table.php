@@ -25,9 +25,6 @@ class CreateProjectsTable extends Migration
 
 public function down()
 {
-  Schema::table('projects', function(Blueprint $table) {
-    $table->dropForeign('projects_user_id_foreign');
-  });
   Schema::drop('projects');
 }
 }
