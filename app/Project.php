@@ -14,4 +14,9 @@ class Project extends Model
 		return $this->belongsTo('App\User');
 	}
 
+  public function language()
+	{
+		return $this->belongsTo('App\Language');
+	}
+
 }

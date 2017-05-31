@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\ProjectRepository;
 use App\Http\Requests\ProjectRequest;
+use App\Language;
 
 class ProjectController extends Controller
 {
@@ -30,7 +31,8 @@ class ProjectController extends Controller
 
 	public function create()
 	{
-		return view('project.create');
+    $languages = Language::pluck('name', 'id');
+		return view('project.create', ['languages'=> $languages]);
 	}
 
 	public function store(ProjectRequest $request)

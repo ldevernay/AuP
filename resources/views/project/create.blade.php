@@ -19,6 +19,10 @@
 						{!! Form::text ('github', null, ['class' => 'form-control', 'placeholder' => 'Lien Github']) !!}
 						{!! $errors->first('github', '<small class="help-block">:message</small>') !!}
 					</div>
+					<div class="form-group {!! $errors->has('language_id') ? 'has-error' : '' !!}">
+						{{ Form::select('Languages', $languages, null) }}
+						{!! $errors->first('language_id', '<small class="help-block">:message</small>') !!}
+					</div>
 					{!! Form::submit('En avant!', ['class' => 'btn btn-info pull-right']) !!}
 				{!! Form::close() !!}
 			</div>

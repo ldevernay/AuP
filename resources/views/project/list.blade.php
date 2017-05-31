@@ -26,6 +26,7 @@
 				<section>
 					<p>{{ $project->pitch }}</p>
   				<p>{{ $project->github }}</p>
+  				<p>{{ $project->language->name }}</p>
 					@if(Auth::check() and Auth::user()->admin)
 						{!! Form::open(['method' => 'DELETE', 'route' => ['project.destroy', $project->id]]) !!}
 							{!! Form::submit('Supprimer ce projet', ['class' => 'btn btn-danger btn-xs ', 'onclick' => 'return confirm(\'Vraiment supprimer ce projet ?\')']) !!}
