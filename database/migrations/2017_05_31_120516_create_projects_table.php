@@ -13,9 +13,9 @@ class CreateProjectsTable extends Migration
     $table->timestamps();
     $table->string('name', 80);
     $table->text('pitch');
-    $table->string('github', 80);
-    $table->integer('creator_id')->unsigned();
-    $table->foreign('creator_id')
+    $table->string('github', 80)->default('https://github.com/ldevernay/AuP');
+    $table->integer('user_id')->unsigned();
+    $table->foreign('user_id')
         ->references('id')
         ->on('users')
         ->onDelete('restrict')

@@ -8,6 +8,9 @@
 			<div class="panel-body">
 				<p>Nom : {{ $user->name }}</p>
 				<p>Email : {{ $user->email }}</p>
+        @foreach($user->projects as $project)
+        <p>Projet : {{ $project->name }}</p>
+        @endforeach
 				@if($user->admin == 1)
 					Administrateur
 				@endif

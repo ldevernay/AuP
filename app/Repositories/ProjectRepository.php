@@ -7,7 +7,7 @@ use App\Project;
 class ProjectRepository
 {
 
-    protected $post;
+  protected $project;
 
     public function __construct(Project $project)
 	{

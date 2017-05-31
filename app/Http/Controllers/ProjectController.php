@@ -14,23 +14,23 @@ class ProjectController extends Controller
 
     public function __construct(ProjectRepository $projectRepository)
 	{
-		$this->middleware('auth', ['except' => 'index']);
-		$this->middleware('admin', ['only' => 'destroy']);
+		$this->middleware('auth', ['except' => 'project.index']);
+		$this->middleware('admin', ['only' => 'project.destroy']);
 
 		$this->projectRepository = $projectRepository;
 	}
 
 	public function index()
 	{
-		$posts = $this->projectRepository->getPaginate($this->nbrPerPage);
-		$links = $posts->render();
+		$projects = $this->projectRepository->getPaginate($this->nbrPerPage);
+		$links = $projects->render();
 
-		return view('projects.liste', compact('projects', 'links'));
+		return view('project.list', compact('projects', 'links'));
 	}
 
 	public function create()
 	{
-		return view('projects.add');
+		return view('project.create');
 	}
 
 	public function store(ProjectRequest $request)
@@ -48,5 +48,29 @@ class ProjectController extends Controller
 
 		return redirect()->back();
 	}
+
+  	public function show($id)
+  	{
+  		$user = $this->projectRepository->getById($id);
+
+  		return view('project.show',  compact('project'));
+  	}
+
+  	public function edit($id)
+  	{
+  		$user = $this->projectRepository->getById($id);
+
+  		return view('project.edit',  compact('project'));
+  	}
+
+  	public function update(ProjectRequest $request, $id)
+  	{
+  		$this->setAdmin($request);
+
+  		$this->projectRepository->update($id, $request->all());
+
+  		return redirect('project')->withOk("Le projet " . $request->input('name') . " a été modifié.");
+  	}
+
 
 }

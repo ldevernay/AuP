@@ -21,7 +21,7 @@ class ProjectTableSeeder extends Seeder {
 				'name' => 'Projet' . $i,
 				'pitch' => 'Pitch' . $i,
 				'github' => 'https://github.com/ldevernay/AuP',
-        'creator_id' => rand(1, 10),
+        'user_id' => rand(1, 10),
 				'created_at' => $date,
 				'updated_at' => $date
 			]);
