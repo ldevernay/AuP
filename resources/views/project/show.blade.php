@@ -10,6 +10,7 @@
       <p>Nom : {{ $project->github }}</p>
       <p>Créateur : {{ $project->user->name }}</p>
       <p>Langage : {{ $project->language->name }}</p>
+      {!! link_to('project/join/' . $project->id, 'Rejoindre',	['class' => 'btn btn-xs btn-info']) !!}
     </div>
   </div>
   <a href="javascript:history.back()" class="btn btn-primary">

@@ -6,80 +6,95 @@ use App\Repositories\ProjectRepository;
 use App\Http\Requests\ProjectRequest;
 use App\Language;
 
+use DB;
+use Auth;
+
 class ProjectController extends Controller
 {
 
-    protected $projectRepository;
+  protected $projectRepository;
 
-    protected $nbrPerPage = 4;
+  protected $nbrPerPage = 4;
 
-    public function __construct(ProjectRepository $projectRepository)
-	{
-		$this->middleware('auth', ['except' => 'project.index']);
-		$this->middleware('admin', ['only' => 'project.destroy']);
+  public function __construct(ProjectRepository $projectRepository)
+  {
+    $this->middleware('auth', ['except' => 'project.index']);
+    $this->middleware('admin', ['only' => 'project.destroy']);
 
-		$this->projectRepository = $projectRepository;
-	}
+    $this->projectRepository = $projectRepository;
+  }
 
-	public function index()
-	{
-		$projects = $this->projectRepository->getPaginate($this->nbrPerPage);
-		$links = $projects->render();
+  public function index()
+  {
+    $projects = $this->projectRepository->getPaginate($this->nbrPerPage);
+    $links = $projects->render();
 
-		return view('project.list', compact('projects', 'links'));
-	}
+    return view('project.list', compact('projects', 'links'));
+  }
 
-	public function create()
-	{
+  public function create()
+  {
     $languages = Language::pluck('name', 'id');
-		return view('project.create', ['languages'=> $languages]);
-	}
+    return view('project.create', ['languages'=> $languages]);
+  }
 
-	public function store(ProjectRequest $request)
-	{
-		$inputs = array_merge($request->all(), ['creator_id' => $request->user()->id]);
+  public function store(ProjectRequest $request)
+  {
+    $inputs = array_merge($request->all(), ['creator_id' => $request->user()->id]);
 
-		$this->projectRepository->store($inputs);
+    $this->projectRepository->store($inputs);
 
-		return redirect(route('project.index'));
-	}
+    return redirect(route('project.index'));
+  }
 
-	public function destroy($id)
-	{
-		$this->projectRepository->destroy($id);
+  public function destroy($id)
+  {
+    $this->projectRepository->destroy($id);
 
-		return redirect()->back();
-	}
+    return redirect()->back();
+  }
 
-  	public function show($id)
-  	{
-  		$project = $this->projectRepository->getById($id);
+  public function show($id)
+  {
+    $project = $this->projectRepository->getById($id);
 
-  		return view('project.show',  compact('project'));
-  	}
+    return view('project.show',  compact('project'));
+  }
 
-  	public function edit($id)
-  	{
-  		$project = $this->projectRepository->getById($id);
+  public function join($project_id)
+  {
+    DB::table('project_user')->insert(array(
+      'project_id' => $project_id,
+      'user_id' => Auth::user()->id
+    ));
 
-  		return view('project.edit',  compact('project'));
-  	}
+    $project = $this->projectRepository->getById($project_id);
 
-  	public function update(ProjectRequest $request, $id)
-  	{
+    return view('project.show',  compact('project'));
+  }
 
-  		$this->projectRepository->update($id, $request->all());
+  public function edit($id)
+  {
+    $project = $this->projectRepository->getById($id);
 
-  		return redirect('project')->withOk("Le projet " . $request->input('name') . " a été modifié.");
-  	}
+    return view('project.edit',  compact('project'));
+  }
 
-    public function indexLanguage($language_id)
-    	{
-    		$projects = $this->projectRepository->getWithUserAndLanguageForLanguagePaginate($language_id, $this->nbrPerPage);
-    		$links = $projects->render();
+  public function update(ProjectRequest $request, $id)
+  {
 
-    		return view('project.list', compact('projects', 'links'))
-    		->with('info', 'Résultats pour la recherche');
-    	}
+    $this->projectRepository->update($id, $request->all());
+
+    return redirect('project')->withOk("Le projet " . $request->input('name') . " a été modifié.");
+  }
+
+  public function indexLanguage($language_id)
+  {
+    $projects = $this->projectRepository->getWithUserAndLanguageForLanguagePaginate($language_id, $this->nbrPerPage);
+    $links = $projects->render();
+
+    return view('project.list', compact('projects', 'links'))
+    ->with('info', 'Résultats pour la recherche');
+  }
 
 }
