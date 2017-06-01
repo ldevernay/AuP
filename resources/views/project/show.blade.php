@@ -10,6 +10,9 @@
       <p>Nom : {{ $project->github }}</p>
       <p>Créateur : {{ $project->user->name }}</p>
       <p>Langage : {{ $project->language->name }}</p>
+      @foreach($project->devs as $dev)
+      <p>Dev : {{ $dev->name }}</p>
+      @endforeach
       {!! link_to('project/join/' . $project->id, 'Rejoindre',	['class' => 'btn btn-xs btn-info']) !!}
     </div>
   </div>
