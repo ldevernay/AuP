@@ -75,6 +75,19 @@ class ProjectController extends Controller
     return view('project.show',  compact('project', 'user'));
   }
 
+  public function quit($project_id)
+  {
+    $user = Auth::user();
+    DB::table('project_user')->where(
+      'project_id','=',$project_id,
+      'AND user_id','=',$user->id
+    )->delete();
+
+    $project = $this->projectRepository->getById($project_id);
+
+    return view('project.show',  compact('project', 'user'));
+  }
+
   public function edit($id)
   {
     $project = $this->projectRepository->getById($id);

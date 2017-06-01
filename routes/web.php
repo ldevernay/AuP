@@ -24,3 +24,4 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('project/language/{language_id}', 'ProjectController@indexLanguage');
 Route::get('project/join/{project_id}', 'ProjectController@join');
+Route::get('project/quit/{project_id}', 'ProjectController@quit');
