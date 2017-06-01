@@ -79,37 +79,39 @@ class ProjectController extends Controller
   {
     $user = Auth::user();
     DB::table('project_user')->where(
-      'project_id','=',$project_id,
-      'AND user_id','=',$user->id
-    )->delete();
+      [
+        ['project_id','=',$project_id],
+        ['user_id','=',$user->id]
+      ]
+      )->delete();
 
-    $project = $this->projectRepository->getById($project_id);
+      $project = $this->projectRepository->getById($project_id);
 
-    return view('project.show',  compact('project', 'user'));
+      return view('project.show',  compact('project', 'user'));
+    }
+
+    public function edit($id)
+    {
+      $project = $this->projectRepository->getById($id);
+
+      return view('project.edit',  compact('project'));
+    }
+
+    public function update(ProjectRequest $request, $id)
+    {
+
+      $this->projectRepository->update($id, $request->all());
+
+      return redirect('project')->withOk("Le projet " . $request->input('name') . " a été modifié.");
+    }
+
+    public function indexLanguage($language_id)
+    {
+      $projects = $this->projectRepository->getWithUserAndLanguageForLanguagePaginate($language_id, $this->nbrPerPage);
+      $links = $projects->render();
+
+      return view('project.list', compact('projects', 'links'))
+      ->with('info', 'Résultats pour la recherche');
+    }
+
   }
-
-  public function edit($id)
-  {
-    $project = $this->projectRepository->getById($id);
-
-    return view('project.edit',  compact('project'));
-  }
-
-  public function update(ProjectRequest $request, $id)
-  {
-
-    $this->projectRepository->update($id, $request->all());
-
-    return redirect('project')->withOk("Le projet " . $request->input('name') . " a été modifié.");
-  }
-
-  public function indexLanguage($language_id)
-  {
-    $projects = $this->projectRepository->getWithUserAndLanguageForLanguagePaginate($language_id, $this->nbrPerPage);
-    $links = $projects->render();
-
-    return view('project.list', compact('projects', 'links'))
-    ->with('info', 'Résultats pour la recherche');
-  }
-
-}

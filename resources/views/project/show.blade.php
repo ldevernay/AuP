@@ -12,8 +12,8 @@
       <p>Langage : {{ $project->language->name }}</p>
       @foreach($project->devs as $dev)
       <p>Dev : {{ $dev->name }}</p>
-      @endforeach  
-      @if(!array_key_exists($user->id, $project->devs->toArray()))
+      @endforeach
+      @if(in_array($user->id, $project->devs->pluck('id')->toArray()))
       {!! link_to('project/quit/' . $project->id, 'Quitter',	['class' => 'btn btn-xs btn-info']) !!}
       @else
       {!! link_to('project/join/' . $project->id, 'Rejoindre',	['class' => 'btn btn-xs btn-info']) !!}
