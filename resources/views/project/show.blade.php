@@ -13,7 +13,11 @@
       @foreach($project->devs as $dev)
       <p>Dev : {{ $dev->name }}</p>
       @endforeach
+      @if(in_array($user, $project->devs->toArray()))
+      {!! link_to('project/join/' . $project->id, 'Quitter',	['class' => 'btn btn-xs btn-info']) !!}
+      @else
       {!! link_to('project/join/' . $project->id, 'Rejoindre',	['class' => 'btn btn-xs btn-info']) !!}
+      @endif
     </div>
   </div>
   <a href="javascript:history.back()" class="btn btn-primary">

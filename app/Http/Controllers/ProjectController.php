@@ -56,21 +56,23 @@ class ProjectController extends Controller
 
   public function show($id)
   {
+    $user = Auth::user();
     $project = $this->projectRepository->getById($id);
 
-    return view('project.show',  compact('project'));
+    return view('project.show',  compact('project', 'user'));
   }
 
   public function join($project_id)
   {
+    $user = Auth::user();
     DB::table('project_user')->insert(array(
       'project_id' => $project_id,
-      'user_id' => Auth::user()->id
+      'user_id' => $user->id
     ));
 
     $project = $this->projectRepository->getById($project_id);
 
-    return view('project.show',  compact('project'));
+    return view('project.show',  compact('project', 'user'));
   }
 
   public function edit($id)
