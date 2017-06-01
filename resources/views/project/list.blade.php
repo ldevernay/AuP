@@ -26,7 +26,7 @@
 				<section>
 					<p>{{ $project->pitch }}</p>
   				<p>{{ $project->github }}</p>
-  				<p>{{ $project->language->name }}</p>
+  				{!! link_to('project/language/' . $project->language->id, $project->language->name,	['class' => 'btn btn-xs btn-info']) !!}
 					<em class="pull-right">
 					{!! link_to_route('project.show', 'Voir', [$project->id], ['class' => 'btn btn-success btn-block']) !!}
 					{!! link_to_route('project.edit', 'Modifier', [$project->id], ['class' => 'btn btn-warning btn-block']) !!}
@@ -41,4 +41,7 @@
 		<br>
 	@endforeach
 	{!! $links !!}
+	<a href="javascript:history.back()" class="btn btn-primary">
+    <span class="glyphicon glyphicon-circle-arrow-left"></span> Retour
+  </a>
 @endsection

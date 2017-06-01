@@ -25,7 +25,8 @@ class ProjectRequest extends FormRequest
     {
         return [
           'name' => 'required|max:80',
-          'pitch' => 'required'
+          'pitch' => 'required',
+          'github' => 'required'
         ];
     }
 }

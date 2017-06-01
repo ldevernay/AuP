@@ -22,3 +22,4 @@ Route::resource('project', 'ProjectController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('project/language/{language_id}', 'ProjectController@indexLanguage');

@@ -73,5 +73,13 @@ class ProjectController extends Controller
   		return redirect('project')->withOk("Le projet " . $request->input('name') . " a été modifié.");
   	}
 
+    public function indexLanguage($language_id)
+    	{
+    		$projects = $this->projectRepository->getWithUserAndLanguageForLanguagePaginate($language_id, $this->nbrPerPage);
+    		$links = $projects->render();
+
+    		return view('project.list', compact('projects', 'links'))
+    		->with('info', 'Résultats pour la recherche');
+    	}
 
 }

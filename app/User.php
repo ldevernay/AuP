@@ -36,4 +36,9 @@ class User extends Authenticatable
   {
     return $this->hasMany('App\Project');
   }
+
+  public function involved_projects()
+	{
+		return $this->belongsToMany('App\Project');
+	}
 }

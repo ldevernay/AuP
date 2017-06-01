@@ -19,4 +19,8 @@ class Project extends Model
 		return $this->belongsTo('App\Language');
 	}
 
+  public function devs()
+  	{
+  		return $this->belongsToMany('App\User');
+  	}
 }
