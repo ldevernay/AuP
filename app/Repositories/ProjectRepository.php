@@ -29,7 +29,7 @@ class ProjectRepository
   public function destroy($id)
   {
     $project = $this->project->findOrFail($id);
-    $project->language->detach();
+    $project->devs()->detach();
     $project->delete();
   }
 

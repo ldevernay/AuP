@@ -14,7 +14,7 @@ class ProjectController extends Controller
 
   protected $projectRepository;
 
-  protected $nbrPerPage = 4;
+  protected $nbrPerPage = 10;
 
   public function __construct(ProjectRepository $projectRepository)
   {
